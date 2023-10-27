@@ -2,5 +2,6 @@
 node_modules
 dist/
 
-#misc
+# misc
 .env
+.DS_Store
