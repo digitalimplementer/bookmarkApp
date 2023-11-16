@@ -1,4 +1,9 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+   ForbiddenException,
+   Injectable,
+   InternalServerErrorException,
+   UnauthorizedException,
+} from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import * as argon from 'argon2';
 import { ConfigService } from '@nestjs/config';
@@ -16,7 +21,7 @@ export class AuthService {
    ) {}
 
    async signup(dto: AuthDto) {
-      const { email, password } = dto;
+      const { email, password, firstName, lastName } = dto;
       // generate hash password
       const hash = await argon.hash(password);
 
@@ -24,6 +29,8 @@ export class AuthService {
          const newUser = await this.prisma.user.create({
             data: {
                email,
+               firstName,
+               lastName,
                hash,
             },
             // select: {
@@ -65,14 +72,16 @@ export class AuthService {
       delete user.hash;
       const userData = {
          email: user.email,
+         id: user.id,
       };
 
       const accessToken = await this.signToken(user.id, user.email);
+      const refreshToken = await this.signToken(user.id, user.email);
 
-      return { ...userData, ...accessToken };
+      return { ...userData, ...accessToken, ...refreshToken };
    }
 
-   async signToken(userId: number, email: string): Promise<{ accessToken: string }> {
+   async signToken(userId: number, email: string): Promise<{ accessToken: string; refreshToken: string }> {
       const payload = {
          sub: userId,
          email,
@@ -80,12 +89,58 @@ export class AuthService {
       const secret = this.config.get('JWT_SECRET');
 
       const token = await this.jwt.signAsync(payload, {
-         expiresIn: '15m',
+         expiresIn: '5m',
+         secret,
+      });
+
+      const refreshToken = await this.jwt.signAsync(payload, {
+         expiresIn: '30d',
          secret,
       });
 
       return {
          accessToken: token,
+         refreshToken,
       };
+   }
+
+   async refreshAccessToken(bearerToken: string) {
+      const [type, refreshToken] = bearerToken.split(' ') ?? '';
+
+      if (type !== 'Bearer' || !refreshToken) {
+         throw new UnauthorizedException('Invalid refresh token');
+      }
+
+      try {
+         const secret = this.config.get('JWT_SECRET');
+         if (!secret) {
+            throw new InternalServerErrorException('JWT secret not configured');
+         }
+
+         const decoded = await this.jwt.verifyAsync(refreshToken, { secret });
+         if (!decoded || typeof decoded !== 'object') {
+            throw new UnauthorizedException('Invalid refresh token');
+         }
+
+         const { sub, email } = decoded;
+         const newAccessToken = await this.jwt.signAsync(
+            { sub, email },
+            {
+               expiresIn: '5m',
+               secret,
+            },
+         );
+         return {
+            newAccessToken,
+         };
+      } catch (error) {
+         if (error instanceof UnauthorizedException) {
+            throw new UnauthorizedException(error.message);
+         } else if (error instanceof InternalServerErrorException) {
+            throw new InternalServerErrorException(error.message);
+         } else {
+            throw new InternalServerErrorException('Internal server error during token update');
+         }
+      }
    }
 }

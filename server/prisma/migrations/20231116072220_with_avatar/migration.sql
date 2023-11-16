@@ -7,6 +7,7 @@ CREATE TABLE "users" (
     "hash" TEXT NOT NULL,
     "firstName" TEXT,
     "lastName" TEXT,
+    "avatar" TEXT,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );

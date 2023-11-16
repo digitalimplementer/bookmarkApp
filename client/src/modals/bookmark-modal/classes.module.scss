@@ -1,0 +1,13 @@
+@use '../../styles/font-vars.scss' as size;
+@use '../../styles/functions.scss' as fn;
+
+.modal {
+   width: fn.pxToRem(450);
+   height: fn.pxToRem(650);
+
+   .inputsBox {
+      display: flex;
+      flex-direction: column;
+      gap: map-get(size.$font-size, '12');
+   }
+}

@@ -1,0 +1,11 @@
+@use '../../styles/color-vars.scss' as colors;
+@use '../../styles/common-vars.scss' as common;
+
+.avatar {
+   border-radius: 50%;
+   border: map-get(common.$border, 'main');
+   border-color: map-get(colors.$color-white, 'border');
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}

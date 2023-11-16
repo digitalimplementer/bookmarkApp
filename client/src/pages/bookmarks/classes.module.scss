@@ -1,0 +1,49 @@
+@use '../../styles/color-vars.scss' as colors;
+@use '../../styles/common-vars.scss' as common;
+@use '../../styles/font-vars.scss' as size;
+@use '../../styles/functions.scss' as fn;
+
+.cardsWrapper {
+   display: grid;
+   gap: map-get(size.$font-size, '16');
+   grid-template-columns: repeat(4, minmax(100px, 1fr));
+   margin-bottom: map-get(size.$font-size, '20');
+
+   .cardBox {
+      background-color: map-get(colors.$color-white, 'primary');
+      border: map-get(common.$border, 'thin');
+      border-color: map-get(colors.$color-white, 'border');
+      border-radius: map-get(size.$font-size, '4');
+      padding: map-get(size.$font-size, '16');
+      min-width: fn.pxToRem(245);
+      height: fn.pxToRem(120);
+      transition: map-get(common.$vars, 'transition');
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      &:hover {
+         box-shadow: map-get(common.$vars, 'shadow');
+         cursor: pointer;
+      }
+   }
+}
+
+@media (max-width: 1067px) {
+   .cardsWrapper {
+      grid-template-columns: repeat(3, minmax(100px, 1fr));
+   }
+}
+
+@media (max-width: 767px) {
+   .cardsWrapper {
+      grid-template-columns: repeat(2, minmax(100px, 1fr));
+   }
+}
+
+@media (max-width: 527px) {
+   .cardsWrapper {
+      grid-template-columns: repeat(1, minmax(100px, 1fr));
+   }
+}

@@ -1,0 +1,57 @@
+@use '../../styles/color-vars.scss' as colors;
+@use '../../styles/common-vars.scss' as common;
+@use '../../styles/font-vars.scss' as size;
+
+.dialog {
+   width: 100%;
+   height: 100%;
+   background-color: map-get(colors.$color-black, 'modalDropShadow');
+   border: none;
+
+   .modalWrapper {
+      border: map-get(common.$border, 'main');
+      border-radius: map-get(size.$font-size, '4');
+      border-color: map-get(colors.$color-white, 'border');
+      background-color: map-get(colors.$color-white, 'primary');
+      box-shadow: map-get(common.$vars, 'modalShadow');
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      .modalHeading {
+         padding: map-get(size.$font-size, '16');
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         border-bottom: map-get(common.$border, 'main') map-get(colors.$color-white, 'border');
+
+         .title {
+            font-size: map-get(size.$font-size, '24');
+         }
+
+         svg {
+            cursor: pointer;
+            border-radius: 50%;
+
+            &:hover {
+               border-radius: 50%;
+               box-shadow: map-get(common.$vars, 'modalShadow');
+            }
+            path {
+               fill: map-get(colors.$color-black, 'primary');
+            }
+         }
+      }
+
+      .modalContentBox {
+         height: 100%;
+         padding: map-get(size.$font-size, '16');
+         display: flex;
+         flex-direction: column;
+         justify-content: space-between;
+      }
+   }
+}

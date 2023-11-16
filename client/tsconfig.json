@@ -14,7 +14,16 @@
       "resolveJsonModule": true,
       "isolatedModules": true,
       "noEmit": true,
-      "jsx": "react-jsx"
+      "jsx": "react-jsx",
+      "baseUrl": "./src"
    },
-   "include": ["src"]
+   "paths": {
+      "modals/*": ["modals/*"],
+      "components/*": ["components/*"],
+      "store/*": ["store/*"],
+      "utils/*": ["utils/*"],
+      "styles/*": ["styles/*"],
+      "wrappers/*": ["wrappers/*"]
+   },
+   "include": ["src", "declaration.d.ts"]
 }

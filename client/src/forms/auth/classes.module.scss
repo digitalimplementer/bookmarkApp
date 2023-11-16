@@ -1,0 +1,66 @@
+@use '../../styles/color-vars.scss' as colors;
+@use '../../styles/font-vars.scss' as fonts;
+@use '../../styles/common-vars.scss' as common;
+@use '../../styles/functions.scss' as func;
+
+.formClass {
+   width: func.pxToRem(450);
+   min-height: func.pxToRem(550);
+   border: map-get(common.$border, 'thin');
+   border-color: map-get(colors.$color-white, 'border');
+   background: map-get(colors.$color-white, 'primary');
+   border-radius: map-get(fonts.$font-size, '10');
+   padding: map-get(fonts.$font-size, '16');
+   gap: map-get(fonts.$font-size, '32');
+   display: flex;
+   flex-direction: column;
+
+   .topWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: map-get(fonts.$font-size, '12');
+
+      .formLabel {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+
+         h3 {
+            font-size: map-get(fonts.$font-size, '32');
+         }
+
+         svg > path {
+            fill: map-get(colors.$color-black, 'primary');
+         }
+      }
+   }
+
+   .orBox {
+      display: flex;
+      align-items: center;
+
+      .line {
+         width: 50%;
+         height: 1px;
+         background-color: map-get(colors.$color-white, 'border');
+      }
+
+      p {
+         padding: 0 map-get(fonts.$font-size, '8');
+      }
+   }
+
+   .inputsWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: map-get(fonts.$font-size, '24');
+   }
+
+   .buttonsWrapper {
+      display: flex;
+      flex-direction: column;
+      width: 75%;
+      margin: 0 auto;
+      gap: map-get(fonts.$font-size, '10');
+   }
+}

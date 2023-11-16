@@ -1,0 +1,38 @@
+@use '../../styles/font-vars.scss' as size;
+@use '../../styles/common-vars.scss' as common;
+
+.topBarsWrapper {
+   display: flex;
+   flex-direction: column;
+
+   .mainContentBox {
+      display: flex;
+      gap: map-get(size.$font-size, '32');
+      margin-bottom: map-get(size.$font-size, '32');
+      .avatarWrapper {
+         display: flex;
+         align-items: center;
+         flex-direction: column;
+         gap: map-get(size.$font-size, '16');
+         flex-grow: 1;
+      }
+
+      .inputsWrapper {
+         display: flex;
+         flex-direction: column;
+         gap: map-get(size.$font-size, '16');
+         flex-grow: 2;
+      }
+   }
+
+   .buttonBox {
+      display: flex;
+      justify-content: center;
+   }
+}
+
+@media (max-width: map-get(common.$breakpoints, 'sm')) {
+   .mainContentBox {
+      flex-direction: column;
+   }
+}

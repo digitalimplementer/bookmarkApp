@@ -1,0 +1,13 @@
+@use '../../styles/color-vars.scss' as colors;
+@use '../../styles/font-vars.scss' as fonts;
+@use '../../styles/functions.scss' as fn;
+@use '../../styles/common-vars.scss' as common;
+
+.pageWrapper {
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   height: calc(100% - map-get(common.$vars, 'appbarHeight'));
+   margin-top: map-get(common.$vars, 'appbarHeight');
+   padding: map-get(fonts.$font-size, '16');
+}

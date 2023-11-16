@@ -1,0 +1,19 @@
+@use './styles/font-vars.scss' as vars;
+@use './styles/color-vars.scss' as colors;
+@use './styles/common-vars.scss' as common;
+
+@import './styles/fonts.scss';
+@import './styles/reset.scss';
+
+body {
+   font-family: vars.$font-family;
+   font-weight: map-get(vars.$font-weight, 'medium');
+   color: map-get(colors.$color-black, 'primary');
+}
+
+main {
+   width: 100vw;
+   min-height: 100vh;
+   display: flex;
+   background: map-get(colors.$color-white, 'background');
+}

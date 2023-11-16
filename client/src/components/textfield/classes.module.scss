@@ -1,0 +1,40 @@
+@use '../../styles/font-vars.scss' as vars;
+@use '../../styles/color-vars.scss' as colors;
+@use '../../styles/common-vars.scss' as common;
+
+.inputClass {
+   outline: none;
+   width: 100%;
+   border-radius: map-get(vars.$font-size, '4');
+   padding: map-get(vars.$font-size, '16') map-get(vars.$font-size, '14');
+   border: map-get(common.$border, 'main');
+   border-color: map-get(colors.$color-white, 'border');
+
+   &:focus {
+      border-color: map-get(colors.$color-blue, 'primary');
+   }
+
+   &:hover {
+      border-color: map-get(colors.$color-blue, 'primary');
+   }
+
+   &::placeholder {
+      color: map-get(colors.$color-white, 'placeholder');
+      user-select: none;
+   }
+}
+
+.textAreaNoResize {
+   resize: none;
+}
+
+.passwordInputWrapper {
+   position: relative;
+
+   .icon {
+      cursor: pointer;
+      position: absolute;
+      right: map-get(vars.$font-size, '8');
+      top: calc(50% - 0.8em);
+   }
+}

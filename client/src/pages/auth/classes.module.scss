@@ -1,0 +1,12 @@
+@use '../../styles/color-vars.scss' as colors;
+@use '../../styles/font-vars.scss' as fonts;
+@use '../../styles/functions.scss' as fn;
+@use '../../styles/common-vars.scss' as common;
+
+.pageWrapper {
+   width: 100%;
+   height: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}

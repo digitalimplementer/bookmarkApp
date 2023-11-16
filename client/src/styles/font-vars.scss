@@ -1,0 +1,34 @@
+@use './functions.scss' as func;
+
+$font-family: 'Montseratt', sans-serif !default;
+$font-weight: (
+   'light': 300,
+   'regular': 400,
+   'medium': 500,
+   'semiBold': 600,
+   'bold': 700,
+   'extraBold': 800,
+   'black': 900,
+);
+
+$font-size: (
+   '2': func.pxToRem(2),
+   '4': func.pxToRem(4),
+   '6': func.pxToRem(6),
+   '8': func.pxToRem(8),
+   '10': func.pxToRem(10),
+   '12': func.pxToRem(12),
+   '14': func.pxToRem(14),
+   '16': func.pxToRem(16),
+   '18': func.pxToRem(18),
+   '20': func.pxToRem(20),
+   '22': func.pxToRem(22),
+   '24': func.pxToRem(24),
+   '26': func.pxToRem(26),
+   '28': func.pxToRem(28),
+   '30': func.pxToRem(30),
+   '32': func.pxToRem(32),
+   '34': func.pxToRem(34),
+   '36': func.pxToRem(36),
+   '38': func.pxToRem(38),
+);

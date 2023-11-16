@@ -1,0 +1,41 @@
+@use '../../styles/font-vars.scss' as fonts;
+@use '../../styles/color-vars.scss' as colors;
+@use '../../styles/common-vars.scss' as common;
+@use '../../styles/functions.scss' as func;
+
+.appbarWrapper {
+   position: fixed;
+   top: 0;
+   width: 100%;
+   background: map-get(colors.$color-blue, 'primary');
+   height: map-get(common.$vars, 'appbarHeight');
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: map-get(fonts.$font-size, '16');
+
+   .linksBox {
+      display: flex;
+      gap: map-get(fonts.$font-size, '8');
+
+      .activeLink {
+         text-decoration: underline;
+         color: map-get(colors.$color-white, 'primary');
+      }
+
+      & > a {
+         text-decoration: none;
+         text-transform: uppercase;
+         color: map-get(colors.$color-black, 'primary');
+
+         &:hover {
+            text-decoration: underline;
+            color: map-get(colors.$color-white, 'primary');
+         }
+      }
+   }
+}
+
+.disabled {
+   display: none;
+}
