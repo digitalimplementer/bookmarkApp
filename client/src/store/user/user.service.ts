@@ -10,3 +10,11 @@ export const serviceGetUser = () => {
 export const serviceUpdateUser = (data: Partial<UserTypes>) => {
    return apiInstance.patch(apiPaths.users.update, data);
 };
+
+export const serviceUploadAvatar = (file: FormData) => {
+   return apiInstance.post(apiPaths.users.uploadAvatar, file, {
+      headers: {
+         'Content-Type': 'multipart/form-data',
+      },
+   });
+};

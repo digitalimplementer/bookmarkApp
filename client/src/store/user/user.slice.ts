@@ -4,7 +4,7 @@ import { RootState } from 'store';
 
 import type { UserTypes } from './types';
 import { initialState } from './user.state';
-import { serviceGetUser, serviceUpdateUser } from './user.service';
+import { serviceGetUser, serviceUpdateUser, serviceUploadAvatar } from './user.service';
 
 export const fetchUser = createAsyncThunk('user/fetchUser', async (_, { rejectWithValue, dispatch }) => {
    try {
@@ -35,6 +35,22 @@ export const updateUser = createAsyncThunk(
    },
 );
 
+export const uploadAvatar = createAsyncThunk(
+   'user/uploadAvatar',
+   async (file: FormData, { rejectWithValue, dispatch }) => {
+      try {
+         const response = await serviceUploadAvatar(file);
+         dispatch(saveAvatar(response.data?.path));
+         return response.data;
+      } catch (error) {
+         if (error instanceof Error) {
+            return rejectWithValue(error);
+         }
+         return error;
+      }
+   },
+);
+
 export const userSlice = createSlice({
    name: 'authSlice',
    initialState,
@@ -45,9 +61,16 @@ export const userSlice = createSlice({
             user: action.payload,
          };
       },
+
+      saveAvatar(state, action: PayloadAction<string>) {
+         return {
+            ...state,
+            userAvatar: action.payload,
+         };
+      },
    },
 });
 
-export const { saveUser } = userSlice.actions;
+export const { saveUser, saveAvatar } = userSlice.actions;
 
 export const userState = (state: RootState) => state.user;

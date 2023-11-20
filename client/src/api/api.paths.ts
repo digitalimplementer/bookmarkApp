@@ -18,6 +18,6 @@ export const apiPaths = {
    [users]: {
       get: `/${users}/me`,
       update: `/${users}/update`,
-      uploadAvatar: `/${users}/uploadAvatar`,
+      uploadAvatar: `/${users}/upload`,
    },
 } as const;

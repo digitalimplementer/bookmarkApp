@@ -1,5 +1,6 @@
 export interface UserSliceTypes {
    user: UserTypes | null;
+   userAvatar?: string;
 }
 
 export interface UserTypes {
@@ -9,4 +10,5 @@ export interface UserTypes {
    id: number;
    lastName: string;
    updatedAt: Date;
+   avatar?: string;
 }

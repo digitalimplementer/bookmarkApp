@@ -4,9 +4,6 @@ import { apiPaths } from './api.paths';
 
 const apiInstance = axios.create({
    baseURL: process.env.REACT_APP_API_URL,
-   headers: {
-      Accept: 'application/json',
-   },
 });
 
 apiInstance.interceptors.request.use(
