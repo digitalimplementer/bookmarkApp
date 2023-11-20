@@ -24,7 +24,6 @@ export class BookmarkController {
 
    @Post('create')
    createBookmark(@GetUser('id') userId: number, @Body() dto: CreateBookmarkDto) {
-      console.log('USERID', userId);
       return this.bookmarkService.createBookmark(userId, dto);
    }
 

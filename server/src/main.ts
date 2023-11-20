@@ -3,6 +3,8 @@ declare const module: any;
 
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import * as express from 'express';
+import * as path from 'path';
 
 import { AppModule } from './app.module';
 
@@ -15,6 +17,7 @@ async function bootstrap() {
          whitelist: true,
       }),
    );
+   app.use('./uploadedFiles', express.static(path.join(__dirname, 'uploadedFiles')));
    await app.listen(port);
 
    if (module.hot) {
