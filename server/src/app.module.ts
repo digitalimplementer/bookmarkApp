@@ -1,5 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
+
+import { join } from 'path';
 
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
@@ -10,6 +13,10 @@ import { PrismaModule } from './prisma/prisma.module';
    imports: [
       ConfigModule.forRoot({
          isGlobal: true,
+      }),
+      ServeStaticModule.forRoot({
+         rootPath: join(__dirname, '..', 'public'),
+         serveStaticOptions: { index: false },
       }),
       AuthModule,
       UserModule,

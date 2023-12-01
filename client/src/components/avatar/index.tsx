@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 
 import { pxToRem } from 'utils';
@@ -8,21 +8,19 @@ import { ENUM_ICON } from 'enums/icon';
 import type { AvatarProps } from './types';
 import classes from './classes.module.scss';
 
-export const Avatar = ({ size = 72, src, className }: AvatarProps) => {
-   const [avatarSrc, setAvatarSrc] = useState('');
-   useEffect(() => {
-      if (src) {
-         setAvatarSrc(src);
-      }
-   }, [src]);
+export const Avatar = ({ size = 86, src, className }: AvatarProps) => {
    const styles = {
       width: `${pxToRem(size)}`,
       height: `${pxToRem(size)}`,
-      backgroundImage: `url(${avatarSrc})`,
    };
+
    return (
       <div style={styles} className={clsx(classes.avatar, className)}>
-         {!avatarSrc ? <Icon name={ENUM_ICON.PERSON} size={36} /> : null}
+         {!src ? (
+            <Icon name={ENUM_ICON.PERSON} size={36} />
+         ) : (
+            <img alt='Avatar Image' src={src} width='100%' height='100%' />
+         )}
       </div>
    );
 };

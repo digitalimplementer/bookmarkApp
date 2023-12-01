@@ -19,5 +19,7 @@ export const apiPaths = {
       get: `/${users}/me`,
       update: `/${users}/update`,
       uploadAvatar: `/${users}/upload`,
+      getAvatar: `/${users}/getAvatar`,
+      removeAvatar: `/${users}/removeAvatar`,
    },
 } as const;

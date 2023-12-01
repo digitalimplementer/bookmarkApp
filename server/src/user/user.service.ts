@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import * as path from 'path';
-import * as fs from 'fs';
 import { PrismaService } from './../prisma/prisma.service';
 import { EditUserDto } from './dto';
 
@@ -23,23 +21,43 @@ export class UserService {
    }
 
    async uploadAvatar(userId: number, file: Express.Multer.File) {
-      console.log('F', file);
-      console.log('PA', file.path);
-      // const fileExtension = path.extname(file.originalname);
-      // const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-      // const newFilePath = `${file.path}-${uniqueSuffix}${fileExtension}`;
-      // await fs.promises.rename(file.path, newFilePath);
       const user = await this.prisma.user.update({
          where: {
             id: userId,
          },
          data: {
-            avatar: file.path,
+            avatar: `${file.originalname}`,
          },
       });
       delete user.hash;
       return {
-         path: file.path,
+         msg: 'File was uploaded',
       };
+   }
+
+   async getAvatar(userId: number) {
+      const user = await this.prisma.user.findFirst({
+         where: {
+            id: userId,
+         },
+      });
+
+      delete user.hash;
+      return {
+         path: user.avatar,
+      };
+   }
+
+   async removeAvatar(userId: number) {
+      const user = await this.prisma.user.update({
+         where: {
+            id: userId,
+         },
+         data: {
+            avatar: '',
+         },
+      });
+
+      delete user.hash;
    }
 }

@@ -4,7 +4,13 @@ import { RootState } from 'store';
 
 import type { UserTypes } from './types';
 import { initialState } from './user.state';
-import { serviceGetUser, serviceUpdateUser, serviceUploadAvatar } from './user.service';
+import {
+   serviceGetUser,
+   serviceUpdateUser,
+   serviceUploadAvatar,
+   serviceGetAvatar,
+   serviceRemoveAvatar,
+} from './user.service';
 
 export const fetchUser = createAsyncThunk('user/fetchUser', async (_, { rejectWithValue, dispatch }) => {
    try {
@@ -50,6 +56,31 @@ export const uploadAvatar = createAsyncThunk(
       }
    },
 );
+
+export const getAvatar = createAsyncThunk('user/getAvatar', async (_, { rejectWithValue }) => {
+   try {
+      const response = await serviceGetAvatar();
+      return response.data;
+   } catch (error) {
+      if (error instanceof Error) {
+         return rejectWithValue(error);
+      }
+      return error;
+   }
+});
+
+export const removeAvatar = createAsyncThunk('user/removeAvatar', async (_, { rejectWithValue }) => {
+   try {
+      const response = await serviceRemoveAvatar();
+      console.log('RES', response.data);
+      return response.data;
+   } catch (error) {
+      if (error instanceof Error) {
+         return rejectWithValue(error);
+      }
+      return error;
+   }
+});
 
 export const userSlice = createSlice({
    name: 'authSlice',

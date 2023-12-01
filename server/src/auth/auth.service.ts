@@ -126,7 +126,7 @@ export class AuthService {
          const newAccessToken = await this.jwt.signAsync(
             { sub, email },
             {
-               expiresIn: '5m',
+               expiresIn: '1d',
                secret,
             },
          );

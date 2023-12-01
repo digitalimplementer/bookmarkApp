@@ -18,3 +18,11 @@ export const serviceUploadAvatar = (file: FormData) => {
       },
    });
 };
+
+export const serviceGetAvatar = () => {
+   return apiInstance.get(apiPaths.users.getAvatar);
+};
+
+export const serviceRemoveAvatar = () => {
+   return apiInstance.post(apiPaths.users.removeAvatar);
+};

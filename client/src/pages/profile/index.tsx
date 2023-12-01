@@ -4,7 +4,7 @@ import { TextField } from 'components/textfield';
 import { Avatar } from 'components/avatar';
 import { Button } from 'components/button';
 import { useAppSelector, useAppDispatch } from 'store/hooks';
-import { updateUser, userState, uploadAvatar } from 'store/user/user.slice';
+import { updateUser, userState, uploadAvatar, getAvatar, removeAvatar } from 'store/user/user.slice';
 import { PageWrapper } from 'wrappers/page-wrapper';
 import { handleTextfieldChange } from 'utils';
 
@@ -13,6 +13,7 @@ import classes from './classes.module.scss';
 export function ProfilePage() {
    const dispatch = useAppDispatch();
    const inputRef = useRef<HTMLInputElement>(null);
+   const serverHost = process.env.REACT_APP_API_URL;
 
    const { user } = useAppSelector(userState);
    const [userData, setUserData] = useState({
@@ -31,7 +32,13 @@ export function ProfilePage() {
    const handleSave = () => {
       dispatch(updateUser(userData));
    };
-   console.log('a', avatar);
+
+   const handleRemoveAvatar = () => {
+      dispatch(removeAvatar()).then(() => {
+         setAvatar(null);
+      });
+   };
+
    const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       event.preventDefault();
       const files = event.target.files;
@@ -42,8 +49,11 @@ export function ProfilePage() {
             const file = files[i];
             formData.append('file', file);
          }
-         dispatch(uploadAvatar(formData)).then(({ payload }) => {
-            setAvatar(payload?.path);
+         dispatch(uploadAvatar(formData)).then(() => {
+            dispatch(getAvatar()).then((resp) => {
+               const filePath = `${serverHost}/` + `${resp.payload.path}`;
+               setAvatar(filePath);
+            });
          });
       }
    };
@@ -65,7 +75,7 @@ export function ProfilePage() {
                      ref={inputRef}
                      onChange={handleFileInputChange}
                   />
-                  <Button textTransform='capitalize' variant='text' fullWidth>
+                  <Button textTransform='capitalize' variant='text' fullWidth onClick={handleRemoveAvatar}>
                      Remove
                   </Button>
                </div>

@@ -9,10 +9,13 @@ import {
    UseInterceptors,
    ParseFilePipeBuilder,
    HttpStatus,
+   Param,
+   Res,
 } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { Response } from 'express';
 import * as path from 'path';
 
 import { JwtGuard } from '../auth/custom-guard';
@@ -38,27 +41,28 @@ export class UserController {
    @UseInterceptors(
       FileInterceptor('file', {
          storage: diskStorage({
-            destination: './uploadedFiles/avatars',
-            filename(_, file, callback) {
-               const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-               const extension = path.extname(file.originalname);
-               const fileName = `${uniqueSuffix}-${file.originalname}`;
-               callback(null, fileName);
+            destination: './public',
+            filename(req, file, callback) {
+               callback(null, file.originalname);
             },
          }),
       }),
    )
    uploadAvatar(
       @GetUser('id') userId: number,
-      @UploadedFile(
-         new ParseFilePipeBuilder()
-            .addFileTypeValidator({
-               fileType: /image\/(jpeg|png)/,
-            })
-            .build({ errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY }),
-      )
+      @UploadedFile()
       file: Express.Multer.File,
    ) {
       return this.userService.uploadAvatar(userId, file);
+   }
+
+   @Get('getAvatar')
+   getAvatar(@GetUser('id') userId: number) {
+      return this.userService.getAvatar(userId);
+   }
+
+   @Post('removeAvatar')
+   removeAvatar(@GetUser('id') userId: number) {
+      return this.userService.removeAvatar(userId);
    }
 }
