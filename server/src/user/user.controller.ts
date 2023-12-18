@@ -1,22 +1,7 @@
-import {
-   Controller,
-   Get,
-   Patch,
-   UseGuards,
-   Body,
-   UploadedFile,
-   Post,
-   UseInterceptors,
-   ParseFilePipeBuilder,
-   HttpStatus,
-   Param,
-   Res,
-} from '@nestjs/common';
+import { Controller, Get, Patch, UseGuards, Body, UploadedFile, Post, UseInterceptors } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { Response } from 'express';
-import * as path from 'path';
 
 import { JwtGuard } from '../auth/custom-guard';
 import { GetUser } from '../auth/decorator';
